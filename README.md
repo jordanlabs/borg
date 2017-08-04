@@ -1,1 +1,1 @@
-# haskell-toy-robot
+# toy-robot
