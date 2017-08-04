@@ -2,5 +2,7 @@ module Lib
     ( runRobot
     ) where
 
-runRobot :: IO ()
-runRobot = putStrLn "someFunc"
+import Parser
+
+runRobot :: [String] -> Maybe [String]
+runRobot = undefined
