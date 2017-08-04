@@ -1,6 +1,13 @@
 module Main where
 
-import Lib
+-- import Lib (runRobot)
+
+import System.IO (readFile)
 
 main :: IO ()
-main = someFunc
+main = do
+  fileContents <- readFile "data/ex1.txt"
+  putStrLn fileContents
+
+-- commands <- loadfile
+--

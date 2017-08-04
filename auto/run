@@ -1,0 +1,7 @@
+#!/bin/bash -eu
+
+cd $(dirname $0)/..
+
+stack build
+
+stack exec toy-robot-exe

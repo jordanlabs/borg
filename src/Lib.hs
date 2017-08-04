@@ -1,6 +1,6 @@
 module Lib
-    ( someFunc
+    ( runRobot
     ) where
 
-someFunc :: IO ()
-someFunc = putStrLn "someFunc"
+runRobot :: IO ()
+runRobot = putStrLn "someFunc"
