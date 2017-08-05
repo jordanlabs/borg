@@ -36,4 +36,4 @@ commandParser :: Parser T.Command
 commandParser = move <|> left <|> right <|> place
 
 parseCommand :: String -> Maybe T.Command
-parseCommand = undefined
+parseCommand = parseMaybe commandParser
