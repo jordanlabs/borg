@@ -4,5 +4,9 @@ module Lib
 
 import Parser
 
-runRobot :: [String] -> Maybe [String]
-runRobot = undefined
+import Data.Maybe (catMaybes)
+
+runRobot :: [String] -> [String]
+runRobot input = do
+  command <- catMaybes $ fmap parseCommand input
+  ["Woah"]

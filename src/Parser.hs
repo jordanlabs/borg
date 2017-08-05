@@ -1,4 +1,4 @@
-module Parser where
+module Parser (parseCommand) where
 
 import qualified Types as T
 
@@ -14,6 +14,9 @@ left = string' "LEFT" >> return T.Left
 
 right :: Parser T.Command
 right = string' "RIGHT" >> return T.Right
+
+report :: Parser T.Command
+report = string' "REPORT" >> return T.Report
 
 direction :: Parser T.Direction
 direction = (string' "NORTH" >> return T.North)
@@ -33,7 +36,7 @@ place = do
   return $ T.Place (fromIntegral x) (fromIntegral y) d
 
 commandParser :: Parser T.Command
-commandParser = move <|> left <|> right <|> place
+commandParser = move <|> left <|> right <|> place <|> report
 
 parseCommand :: String -> Maybe T.Command
 parseCommand = parseMaybe commandParser
