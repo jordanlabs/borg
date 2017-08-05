@@ -1,7 +1,4 @@
-module Data
-  ( Direction,
-    Command
-  ) where
+module Types where
 
 data Direction = North | East | South | West
   deriving Show
