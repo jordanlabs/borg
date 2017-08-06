@@ -1,13 +1,23 @@
+{-# LANGUAGE TemplateHaskell #-}
+
 module Types where
 
-data Board = Board Int Int (Maybe Robot)
+import Control.Lens
+
+data Board = Board
+  { _boardXSize :: Int
+  , _boardYSize :: Int
+  , _boardRobot :: Maybe Robot }
   deriving Show
 
-data Robot = Robot Int Int Direction
+data Robot = Robot
+  { _robotX :: Int
+  , _robotY :: Int
+  , _robotFacing :: Direction }
   deriving Show
 
 data Direction = North | East | South | West
-  deriving Show
+  deriving (Show, Eq)
 
 data Command =
     Move
@@ -16,3 +26,6 @@ data Command =
   | Report
   | Place Int Int Direction
   deriving Show
+
+makeLenses ''Board
+makeLenses ''Robot
