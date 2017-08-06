@@ -6,16 +6,23 @@ import Control.Lens (over, set, _Just)
 import Data.List (elemIndex)
 import Data.Maybe (fromJust)
 
-execute :: T.Command -> T.Board -> T.Board
-execute command board = if validateBoard newBoard then newBoard else board
+execute :: T.Command -> T.Board -> (Maybe String, T.Board)
+execute command board = (message, finalBoard)
   where
     newBoard = updateBoard command board
+    finalBoard = if validateBoard newBoard then newBoard else board
+    message = produceMessage command finalBoard
 
 updateBoard :: T.Command -> T.Board -> T.Board
 updateBoard (T.Place x y facing) = set T.boardRobot (Just $ T.Robot x y facing)
-updateBoard T.Right = over (placedRobot . T.robotFacing) $ adjustDirection 1
-updateBoard T.Left  = over (placedRobot. T.robotFacing) $ adjustDirection (-1)
-updateBoard T.Move = over placedRobot move
+updateBoard T.Right = over (placedRobot . T.robotFacing) (adjustDirection 1)
+updateBoard T.Left  = over (placedRobot. T.robotFacing) (adjustDirection (-1))
+updateBoard T.Move  = over placedRobot move
+updateBoard _       = id
+
+produceMessage :: T.Command -> T.Board -> Maybe String
+produceMessage T.Report board = report board
+produceMessage _  _           = Nothing
 
 placedRobot = T.boardRobot . _Just
 
@@ -33,6 +40,11 @@ move r@(T.Robot _ _ T.North) = over T.robotY (+1) r
 move r@(T.Robot _ _ T.East) = over T.robotX (+1) r
 move r@(T.Robot _ _ T.South) = over T.robotY (flip (-) 1) r
 move r@(T.Robot _ _ T.West) = over T.robotX (flip (-) 1) r
+
+report :: T.Board -> Maybe String
+report (T.Board _ _ Nothing) = Nothing
+report (T.Board _ _ (Just (T.Robot robotX robotY facing))) =
+  Just $ show robotX ++ "," ++ show robotY ++ "," ++ show facing
 
 validateBoard :: T.Board -> Bool
 validateBoard (T.Board _ _ Nothing) = True
