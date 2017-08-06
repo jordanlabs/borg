@@ -1,4 +1,4 @@
-module BoardProcessor where
+module BoardProcessor (execute) where
 
 import qualified Types as T
 
@@ -16,7 +16,7 @@ execute command board = (message, finalBoard)
 updateBoard :: T.Command -> T.Board -> T.Board
 updateBoard (T.Place x y facing) = set T.boardRobot (Just $ T.Robot x y facing)
 updateBoard T.Right = over (placedRobot . T.robotFacing) (adjustDirection 1)
-updateBoard T.Left  = over (placedRobot. T.robotFacing) (adjustDirection (-1))
+updateBoard T.Left  = over (placedRobot . T.robotFacing) (adjustDirection (-1))
 updateBoard T.Move  = over placedRobot move
 updateBoard _       = id
 

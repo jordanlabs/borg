@@ -1,6 +1,4 @@
-module Lib
-    ( runRobot, foldCommands, startingBoard
-    ) where
+module Lib (runRobot) where
 
 import Parser
 import Types

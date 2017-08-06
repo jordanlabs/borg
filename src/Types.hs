@@ -2,7 +2,7 @@
 
 module Types where
 
-import Control.Lens
+import Control.Lens (makeLenses)
 
 data Board = Board
   { _boardXSize :: Int

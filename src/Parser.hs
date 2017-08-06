@@ -2,9 +2,9 @@ module Parser (parseCommand) where
 
 import qualified Types as T
 
-import Text.Megaparsec
-import Text.Megaparsec.String
-import qualified Text.Megaparsec.Lexer as L
+import Text.Megaparsec (string', space, char, (<|>), parseMaybe)
+import Text.Megaparsec.String (Parser)
+import qualified Text.Megaparsec.Lexer as L (integer)
 
 move :: Parser T.Command
 move = string' "MOVE" >> return T.Move
