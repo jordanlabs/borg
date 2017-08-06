@@ -7,10 +7,15 @@ import Data.List (elemIndex)
 import Data.Maybe (fromJust)
 
 execute :: T.Command -> T.Board -> T.Board
-execute (T.Place x y facing) = set T.boardRobot (Just $ T.Robot x y facing)
-execute T.Right = over (placedRobot . T.robotFacing) $ adjustDirection 1
-execute T.Left  = over (placedRobot. T.robotFacing) $ adjustDirection (-1)
-execute T.Move = over placedRobot move
+execute command board = if validateBoard newBoard then newBoard else board
+  where
+    newBoard = updateBoard command board
+
+updateBoard :: T.Command -> T.Board -> T.Board
+updateBoard (T.Place x y facing) = set T.boardRobot (Just $ T.Robot x y facing)
+updateBoard T.Right = over (placedRobot . T.robotFacing) $ adjustDirection 1
+updateBoard T.Left  = over (placedRobot. T.robotFacing) $ adjustDirection (-1)
+updateBoard T.Move = over placedRobot move
 
 placedRobot = T.boardRobot . _Just
 
@@ -28,3 +33,8 @@ move r@(T.Robot _ _ T.North) = over T.robotY (+1) r
 move r@(T.Robot _ _ T.East) = over T.robotX (+1) r
 move r@(T.Robot _ _ T.South) = over T.robotY (flip (-) 1) r
 move r@(T.Robot _ _ T.West) = over T.robotX (flip (-) 1) r
+
+validateBoard :: T.Board -> Bool
+validateBoard (T.Board _ _ Nothing) = True
+validateBoard (T.Board boardX boardY (Just (T.Robot robotX robotY _))) =
+  robotX > 0 && robotX <= boardX && robotY > 0 && robotY <= boardY
