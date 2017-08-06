@@ -20,11 +20,11 @@ updateBoard T.Left  = over (placedRobot. T.robotFacing) (adjustDirection (-1))
 updateBoard T.Move  = over placedRobot move
 updateBoard _       = id
 
+placedRobot = T.boardRobot . _Just
+
 produceMessage :: T.Command -> T.Board -> Maybe String
 produceMessage T.Report board = report board
 produceMessage _  _           = Nothing
-
-placedRobot = T.boardRobot . _Just
 
 directions :: [T.Direction]
 directions = [T.North, T.East, T.South, T.West]
@@ -37,9 +37,9 @@ adjustDirection num = (!!) directions . flip mod 4 . fromIntegral . (+ num) . ge
 
 move :: T.Robot -> T.Robot
 move r@(T.Robot _ _ T.North) = over T.robotY (+1) r
-move r@(T.Robot _ _ T.East) = over T.robotX (+1) r
+move r@(T.Robot _ _ T.East)  = over T.robotX (+1) r
 move r@(T.Robot _ _ T.South) = over T.robotY (flip (-) 1) r
-move r@(T.Robot _ _ T.West) = over T.robotX (flip (-) 1) r
+move r@(T.Robot _ _ T.West)  = over T.robotX (flip (-) 1) r
 
 report :: T.Board -> Maybe String
 report (T.Board _ _ Nothing) = Nothing
