@@ -10,17 +10,23 @@ main :: IO ()
 main = hspec $
   describe "Parser.parseCommand" $
     do
-      it "parsing a left command" $
+      it "left command" $
         parseCommand "LEFT" `shouldBe` Just T.Left
 
-      it "parsing a right command" $
+      it "right command" $
         parseCommand "RIGHT" `shouldBe` Just T.Right
 
-      it "parsing a move command" $
+      it "move command" $
         parseCommand "MOVE" `shouldBe` Just T.Move
 
-      it "parsing a REPORT command" $
+      it "report command" $
         parseCommand "REPORT" `shouldBe` Just T.Report
 
-      it "parsing a place command" $
+      it "place command" $
         parseCommand "PLACE 1,1,North" `shouldBe` Just (T.Place 1 1 T.North)
+
+      it "mixed case command" $
+        parseCommand "LeFt" `shouldBe` Just T.Left
+
+      it "other command" $
+        parseCommand "JUMP" `shouldBe` Nothing
