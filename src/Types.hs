@@ -8,13 +8,13 @@ data Board = Board
   { _boardXSize :: Int
   , _boardYSize :: Int
   , _boardRobot :: Maybe Robot }
-  deriving Show
+  deriving (Show, Eq)
 
 data Robot = Robot
   { _robotX :: Int
   , _robotY :: Int
   , _robotFacing :: Direction }
-  deriving Show
+  deriving (Show, Eq)
 
 data Direction = North | East | South | West
   deriving (Show, Eq)

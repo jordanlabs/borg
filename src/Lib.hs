@@ -7,6 +7,7 @@ import BoardProcessor
 import Data.Maybe (catMaybes)
 import Data.Foldable (foldl')
 
+-- hmm feel like this could use the state monad?
 runRobot :: [String] -> [String]
 runRobot input =
   let commands = catMaybes $ fmap parseCommand input
