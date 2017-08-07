@@ -25,7 +25,7 @@ data Command =
   | Right
   | Report
   | Place Int Int Direction
-  deriving Show
+  deriving (Show, Eq)
 
 makeLenses ''Board
 makeLenses ''Robot
