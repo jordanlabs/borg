@@ -42,4 +42,6 @@ rightAction = placedRobotFacing %= right
 reportAction :: (GameAction m, MessageWriter m) => m ()
 reportAction = do
   r <- use T.boardRobot
-  tell [show r]
+  case r of
+    (Just r) -> tell [show r]
+    _        -> return ()
