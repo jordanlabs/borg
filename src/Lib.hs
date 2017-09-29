@@ -6,8 +6,6 @@ import           Types
 
 import           Control.Monad.State
 import           Control.Monad.Writer
-import           Data.Foldable         (foldl')
-import           Data.Functor.Identity (runIdentity)
 import           Data.Maybe            (catMaybes)
 
 runRobot :: [String] -> [String]
