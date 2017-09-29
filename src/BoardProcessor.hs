@@ -4,7 +4,7 @@ module BoardProcessor (getAction) where
 
 import qualified Types                    as T
 
-import           BoardActions             (left, move, right)
+import           BoardFunctions             (left, move, right)
 import           Control.Lens             (over, set, use, (%=), (%%=), (.=), _Just)
 import           Control.Monad.State.Lazy
 import           Control.Monad.Writer

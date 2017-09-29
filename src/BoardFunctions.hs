@@ -1,6 +1,6 @@
 {-# LANGUAGE ConstraintKinds  #-}
 {-# LANGUAGE FlexibleContexts #-}
-module BoardActions (left, right, move, report) where
+module BoardFunctions (left, right, move, report) where
 
 import qualified Types        as T
 

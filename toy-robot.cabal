@@ -16,7 +16,7 @@ library
   exposed-modules:     Lib
                      , Parser
                      , BoardProcessor
-                     , BoardActions
+                     , BoardFunctions
                      , Types
   build-depends:       base >= 4.7 && < 5
                      , megaparsec
