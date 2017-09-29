@@ -5,18 +5,21 @@ module Types where
 import Control.Lens (makeLenses)
 
 data Board = Board
-  { _boardXSize :: Int
-  , _boardYSize :: Int
-  , _boardRobot :: Maybe Robot }
+  { _maxCoordinate :: Coordinate
+  , _boardRobot    :: Maybe Robot }
   deriving (Show, Eq)
 
 data Robot = Robot
-  { _robotX :: Int
-  , _robotY :: Int
-  , _robotFacing :: Direction }
+  { _robotPosition :: Coordinate
+  , _robotFacing   :: Direction }
   deriving (Show, Eq)
 
 data Direction = North | East | South | West
+  deriving (Show, Eq)
+
+data Coordinate = Coordinate
+  { _coordinateX :: Int
+  , _coordinateY :: Int }
   deriving (Show, Eq)
 
 data Command =
@@ -24,8 +27,9 @@ data Command =
   | Left
   | Right
   | Report
-  | Place Int Int Direction
+  | Place Coordinate Direction
   deriving (Show, Eq)
 
 makeLenses ''Board
 makeLenses ''Robot
+makeLenses ''Coordinate

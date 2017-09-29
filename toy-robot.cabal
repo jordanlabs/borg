@@ -36,6 +36,8 @@ test-suite toy-robot-test
   type:                exitcode-stdio-1.0
   hs-source-dirs:      test
   main-is:             Spec.hs
+  other-modules:       BoardProcessorSpec
+                     , ParserSpec
   build-depends:       base
                      , toy-robot
                      , hspec

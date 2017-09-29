@@ -16,4 +16,4 @@ runRobot input =
    in execWriter $ evalStateT finalAction startingBoard
 
 startingBoard :: Board
-startingBoard = Board 5 5 Nothing
+startingBoard = Board (Coordinate 5 5) Nothing

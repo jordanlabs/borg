@@ -24,12 +24,17 @@ right :: T.Direction -> T.Direction
 right = adjustDirection 1
 
 move :: T.Robot -> T.Robot
-move r@(T.Robot _ _ T.North) = over T.robotY (+1) r
-move r@(T.Robot _ _ T.East)  = over T.robotX (+1) r
-move r@(T.Robot _ _ T.South) = over T.robotY (flip (-) 1) r
-move r@(T.Robot _ _ T.West)  = over T.robotX (flip (-) 1) r
+move r@(T.Robot _ T.North) = over (T.robotPosition . T.coordinateY) (+1) r
+move r@(T.Robot _ T.East)  = over (T.robotPosition . T.coordinateX) (+1) r
+move r@(T.Robot _ T.South) = over (T.robotPosition . T.coordinateY) (flip (-) 1) r
+move r@(T.Robot _ T.West)  = over (T.robotPosition . T.coordinateX) (flip (-) 1) r
+
+validateBoard :: T.Board -> Bool
+validateBoard (T.Board _ Nothing) = True
+validateBoard (T.Board (T.Coordinate boardX boardY) (Just (T.Robot (T.Coordinate robotX robotY) _))) =
+  robotX > 0 && robotX <= boardX && robotY > 0 && robotY <= boardY
 
 report :: T.Board -> Maybe String
-report (T.Board _ _ Nothing) = Nothing
-report (T.Board _ _ (Just (T.Robot robotX robotY facing))) =
+report (T.Board _ Nothing) = Nothing
+report (T.Board _ (Just (T.Robot (T.Coordinate robotX robotY) facing))) =
   Just $ show robotX ++ "," ++ show robotY ++ "," ++ show facing

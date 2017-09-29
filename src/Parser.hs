@@ -33,7 +33,7 @@ place = do
   y <- L.integer
   char ','
   d <- direction
-  return $ T.Place (fromIntegral x) (fromIntegral y) d
+  return $ T.Place (T.Coordinate (fromIntegral x) (fromIntegral y)) d
 
 commandParser :: Parser T.Command
 commandParser = move <|> left <|> right <|> place <|> report
