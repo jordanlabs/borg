@@ -1,50 +1,49 @@
-module BoardProcessor (execute) where
+{-# LANGUAGE ConstraintKinds  #-}
+{-# LANGUAGE FlexibleContexts #-}
+module BoardProcessor (getAction, GameApp, GameAction) where
 
-import qualified Types as T
+import qualified Types                    as T
 
-import Control.Lens (over, set, _Just)
-import Data.List (elemIndex)
-import Data.Maybe (fromJust)
+import           BoardActions             (left, move, right)
+import           Control.Lens             (over, set, use, (%=), (.=), _Just)
+import           Control.Monad.State.Lazy
+import           Control.Monad.Writer
+import           Data.Functor.Identity    (Identity)
+import           Data.List                (elemIndex)
+import           Data.Maybe               (fromJust)
 
-execute :: T.Command -> T.Board -> (Maybe String, T.Board)
-execute command board = (message, finalBoard)
-  where
-    newBoard = updateBoard command board
-    finalBoard = if validateBoard newBoard then newBoard else board
-    message = produceMessage command finalBoard
-
-updateBoard :: T.Command -> T.Board -> T.Board
-updateBoard (T.Place x y facing) = set T.boardRobot (Just $ T.Robot x y facing)
-updateBoard T.Right = over (placedRobot . T.robotFacing) (adjustDirection 1)
-updateBoard T.Left  = over (placedRobot . T.robotFacing) (adjustDirection (-1))
-updateBoard T.Move  = over placedRobot move
-updateBoard _       = id
+getAction :: T.Command -> GameApp ()
+getAction (T.Place x y facing) = placeAction x y facing
+getAction T.Left               = leftAction
+getAction T.Right              = rightAction
+getAction T.Move               = moveAction
+getAction T.Report             = reportAction
 
 placedRobot = T.boardRobot . _Just
+placedRobotFacing = placedRobot . T.robotFacing
 
-produceMessage :: T.Command -> T.Board -> Maybe String
-produceMessage T.Report board = report board
-produceMessage _  _           = Nothing
+type MessageWriter = MonadWriter [String]
 
-directions :: [T.Direction]
-directions = [T.North, T.East, T.South, T.West]
+type GameApp = StateT T.Board (WriterT [String] Identity)
 
-getIndex :: T.Direction -> Int
-getIndex = fromJust . flip elemIndex directions
+type GameAction = MonadState T.Board
 
-adjustDirection :: Int -> T.Direction -> T.Direction
-adjustDirection num = (!!) directions . flip mod 4 . fromIntegral . (+ num) . getIndex
+placeAction :: GameAction m => Int -> Int -> T.Direction -> m ()
+placeAction x y facing = T.boardRobot .= Just (T.Robot x y facing)
 
-move :: T.Robot -> T.Robot
-move r@(T.Robot _ _ T.North) = over T.robotY (+1) r
-move r@(T.Robot _ _ T.East)  = over T.robotX (+1) r
-move r@(T.Robot _ _ T.South) = over T.robotY (flip (-) 1) r
-move r@(T.Robot _ _ T.West)  = over T.robotX (flip (-) 1) r
+moveAction :: GameAction m => m ()
+moveAction =  placedRobot %= move
 
-report :: T.Board -> Maybe String
-report (T.Board _ _ Nothing) = Nothing
-report (T.Board _ _ (Just (T.Robot robotX robotY facing))) =
-  Just $ show robotX ++ "," ++ show robotY ++ "," ++ show facing
+leftAction :: GameAction m => m ()
+leftAction =  placedRobotFacing %= left
+
+rightAction :: GameAction m => m ()
+rightAction = placedRobotFacing %= right
+
+reportAction :: (GameAction m, MessageWriter m) => m ()
+reportAction = do
+  r <- use T.boardRobot
+  tell [show r]
 
 validateBoard :: T.Board -> Bool
 validateBoard (T.Board _ _ Nothing) = True
