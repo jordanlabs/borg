@@ -2,8 +2,8 @@
 
 module Types where
 
-import Control.Lens (makeLenses)
-import Data.Char (toUpper)
+import           Control.Lens (makeLenses)
+import           Data.Char    (toUpper)
 
 data Board = Board
   { _maxCoordinate :: Coordinate

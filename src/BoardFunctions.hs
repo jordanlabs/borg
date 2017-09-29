@@ -1,6 +1,4 @@
-{-# LANGUAGE ConstraintKinds  #-}
-{-# LANGUAGE FlexibleContexts #-}
-module BoardFunctions (left, right, move, report) where
+module BoardFunctions (left, right, move) where
 
 import qualified Types        as T
 
@@ -33,8 +31,3 @@ validateBoard :: T.Board -> Bool
 validateBoard (T.Board _ Nothing) = True
 validateBoard (T.Board (T.Coordinate boardX boardY) (Just (T.Robot (T.Coordinate robotX robotY) _))) =
   robotX > 0 && robotX <= boardX && robotY > 0 && robotY <= boardY
-
-report :: T.Board -> Maybe String
-report (T.Board _ Nothing) = Nothing
-report (T.Board _ (Just (T.Robot (T.Coordinate robotX robotY) facing))) =
-  Just $ show robotX ++ "," ++ show robotY ++ "," ++ show facing

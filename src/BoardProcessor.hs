@@ -2,14 +2,12 @@
 {-# LANGUAGE FlexibleContexts #-}
 module BoardProcessor (getAction) where
 
-import qualified Types                    as T
+import qualified Types                as T
 
-import           BoardFunctions             (left, move, right)
-import           Control.Lens             (over, set, use, (%=), (%%=), (.=), _Just)
-import           Control.Monad.State.Lazy
-import           Control.Monad.Writer
-import           Data.List                (elemIndex)
-import           Data.Maybe               (fromJust)
+import           BoardFunctions       (left, move, right)
+import           Control.Lens         (use, (%=), (.=), _Just)
+import           Control.Monad.State  (MonadState, StateT)
+import           Control.Monad.Writer (MonadWriter, Writer, tell)
 
 getAction :: T.Command -> GameApp ()
 getAction (T.Place coords facing) = placeAction coords facing

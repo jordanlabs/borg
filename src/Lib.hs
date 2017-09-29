@@ -4,9 +4,9 @@ import           BoardProcessor
 import           Parser
 import           Types
 
-import           Control.Monad.State
-import           Control.Monad.Writer
-import           Data.Maybe            (catMaybes)
+import           Control.Monad.State  (evalStateT)
+import           Control.Monad.Writer (execWriter)
+import           Data.Maybe           (catMaybes)
 
 runRobot :: [String] -> [String]
 runRobot input =
