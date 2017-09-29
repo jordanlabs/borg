@@ -24,7 +24,7 @@ placedRobotFacing = placedRobot . T.robotFacing
 
 type MessageWriter = MonadWriter [String]
 
-type GameApp = StateT T.Board (WriterT [String] Identity)
+type GameApp = StateT T.Board (Writer [String])
 
 type GameAction = MonadState T.Board
 

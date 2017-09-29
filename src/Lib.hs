@@ -15,7 +15,7 @@ runRobot input =
   let commands = catMaybes $ fmap parseCommand input
       actions = fmap getAction commands
       finalAction = foldl1 (>>) actions
-   in runIdentity $ execWriterT $ evalStateT finalAction startingBoard
+   in execWriter $ evalStateT finalAction startingBoard
 
 startingBoard :: Board
 startingBoard = Board 5 5 Nothing
