@@ -2,10 +2,6 @@ module BoardFunctionsSpec where
 
 import Test.Hspec
 import Test.QuickCheck
-import Control.Exception (evaluate)
-import Data.Maybe (fromJust, isNothing)
-import Control.Lens
-import Control.Lens.Getter
 
 import BoardFunctions
 import qualified Types as T
@@ -32,10 +28,23 @@ genRobotLessThan x' y' = do
   f <- genDirection
   return $ T.Robot (T.Coordinate x y) f
 
+genRobotGreaterThan :: Int -> Int -> Gen T.Robot
+genRobotGreaterThan x' y' = do
+  x <- arbitrary `suchThat` (> x')
+  y <- arbitrary `suchThat` (> y')
+  f <- genDirection
+  return $ T.Robot (T.Coordinate x y) f
+
 genBoardWithRobot :: Gen T.Board
 genBoardWithRobot = do
   c <- genCoordinate
   r <- genRobotLessThan (T._coordinateX c) (T._coordinateY c)
+  return $ T.Board c (Just r)
+
+genBoardWithInvalidRobot :: Gen T.Board
+genBoardWithInvalidRobot = do
+  c <- genCoordinate
+  r <- genRobotGreaterThan (T._coordinateX c) (T._coordinateY c)
   return $ T.Board c (Just r)
 
 genUnplacedBoard :: Gen T.Board
@@ -100,3 +109,16 @@ spec = describe "BoardFunctions" $ do
 
     it "turns left from west" $
       left T.East `shouldBe` T.North
+
+  describe "validateBoard" $ do
+    it "validates a board with no robot" $
+      let board = T.Board (T.Coordinate 5 5) Nothing
+       in validate board `shouldBe` True
+
+    it "validates a board with a valid robot" $ property $
+      forAll genBoardWithRobot $ \b ->
+        validate b `shouldBe` True
+
+    it "validates a board with an invalid robot" $
+      forAll genBoardWithInvalidRobot $ \b ->
+        validate b `shouldBe` False
