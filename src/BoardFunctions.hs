@@ -1,4 +1,4 @@
-module BoardFunctions (left, right, move) where
+module BoardFunctions (left, right, move, validate) where
 
 import qualified Types        as T
 
@@ -27,7 +27,7 @@ move r@(T.Robot _ T.East)  = over (T.robotPosition . T.coordinateX) (+1) r
 move r@(T.Robot _ T.South) = over (T.robotPosition . T.coordinateY) (flip (-) 1) r
 move r@(T.Robot _ T.West)  = over (T.robotPosition . T.coordinateX) (flip (-) 1) r
 
-validateBoard :: T.Board -> Bool
-validateBoard (T.Board _ Nothing) = True
-validateBoard (T.Board (T.Coordinate boardX boardY) (Just (T.Robot (T.Coordinate robotX robotY) _))) =
+validate :: T.Board -> Bool
+validate (T.Board _ Nothing) = True
+validate (T.Board (T.Coordinate boardX boardY) (Just (T.Robot (T.Coordinate robotX robotY) _))) =
   robotX > 0 && robotX <= boardX && robotY > 0 && robotY <= boardY
