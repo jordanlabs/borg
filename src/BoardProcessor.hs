@@ -4,7 +4,7 @@ module BoardProcessor (getAction) where
 
 import qualified Types                as T
 
-import           BoardFunctions       (left, move, right, validate)
+import           BoardFunctions       (place, left, move, right, validate)
 import           Control.Lens         (use, (%=), (.=), _Just, over, set)
 import           Control.Monad.State  (MonadState, StateT, get, put)
 import           Control.Monad.Writer (MonadWriter, Writer, tell)
@@ -26,7 +26,7 @@ type GameApp = StateT T.Board (Writer [String])
 type GameAction = MonadState T.Board
 
 placeAction :: GameAction m => T.Coordinate -> T.Direction -> m ()
-placeAction coords facing = validatedAction (set T.boardRobot $ Just (T.Robot coords facing))
+placeAction coords facing = validatedAction $ place (T.Robot coords facing)
 
 moveAction :: GameAction m => m ()
 moveAction = validatedAction (over placedRobot move)

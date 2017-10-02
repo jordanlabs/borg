@@ -1,8 +1,8 @@
-module BoardFunctions (left, right, move, validate) where
+module BoardFunctions (place, left, right, move, validate) where
 
 import qualified Types        as T
 
-import           Control.Lens (over)
+import           Control.Lens (over, set)
 import           Data.List    (elemIndex)
 import           Data.Maybe   (fromJust)
 
@@ -14,6 +14,9 @@ getIndex = fromJust . flip elemIndex directions
 
 adjustDirection :: Int -> T.Direction -> T.Direction
 adjustDirection num = (!!) directions . flip mod 4 . fromIntegral . (+ num) . getIndex
+
+place :: T.Robot -> T.Board -> T.Board
+place = set T.boardRobot . Just
 
 left :: T.Direction -> T.Direction
 left = adjustDirection (-1)

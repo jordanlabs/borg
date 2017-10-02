@@ -1,8 +1,6 @@
 module ParserSpec where
 
 import Test.Hspec
-import Test.QuickCheck
-import Control.Exception (evaluate)
 
 import Parser
 import qualified Types as T
@@ -23,7 +21,7 @@ spec =
       parseCommand "REPORT" `shouldBe` Just T.Report
 
     it "place command" $
-      parseCommand "PLACE 1,1,North" `shouldBe` Just (T.Place 1 1 T.North)
+      parseCommand "PLACE 1,1,North" `shouldBe` Just (T.Place (T.Coordinate 1 1) T.North)
 
     it "mixed case command" $
       parseCommand "LeFt" `shouldBe` Just T.Left
