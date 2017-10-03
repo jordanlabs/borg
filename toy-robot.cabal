@@ -37,7 +37,7 @@ test-suite toy-robot-test
   hs-source-dirs:      test
   main-is:             Spec.hs
   other-modules:       BoardFunctionsSpec
-                    --  , BoardProcessorSpec
+                     , LibSpec
                      , ParserSpec
   build-depends:       base
                      , toy-robot
