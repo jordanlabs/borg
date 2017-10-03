@@ -1,5 +1,4 @@
 {-# LANGUAGE TemplateHaskell #-}
-
 module Types where
 
 import           Control.Lens (makeLenses)
