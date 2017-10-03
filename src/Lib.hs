@@ -12,7 +12,7 @@ runRobot :: [String] -> [String]
 runRobot input =
   let commands = catMaybes $ fmap parseCommand input
       actions = fmap getAction commands
-      finalAction = foldl1 (>>) actions
+      finalAction = foldr1 (>>) actions
    in execWriter $ evalStateT finalAction startingBoard
 
 startingBoard :: Board
