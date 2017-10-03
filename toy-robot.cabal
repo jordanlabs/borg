@@ -39,6 +39,7 @@ test-suite toy-robot-test
   other-modules:       BoardFunctionsSpec
                      , LibSpec
                      , ParserSpec
+                     , Generators
   build-depends:       base
                      , toy-robot
                      , hspec
