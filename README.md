@@ -21,5 +21,5 @@ auto/run
 ## Testing
 
 ```bash
-stack test
+auto/test
 ```

@@ -26,3 +26,7 @@ spec =
     it "sequence 5" $
       let input = ["PLACE 1,1,SOUTH", "MOVE", "MOVE", "LEFT", "MOVE", "REPORT"]
        in runRobot input `shouldBe` ["2,1,EAST"]
+
+    it "sequence 6" $
+      let input = []
+      in runRobot input `shouldBe` []

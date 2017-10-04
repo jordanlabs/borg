@@ -11,9 +11,8 @@ import           Data.Maybe           (catMaybes)
 runRobot :: [String] -> [String]
 runRobot input =
   let commands = catMaybes $ fmap parseCommand input
-      actions = fmap getAction commands
-      finalAction = foldr1 (>>) actions
-   in execWriter $ evalStateT finalAction startingBoard
+      action   = foldMap getAction commands
+   in execWriter $ evalStateT action startingBoard
 
 startingBoard :: Board
 startingBoard = Board (Coordinate 5 5) Nothing
