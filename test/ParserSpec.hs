@@ -1,9 +1,9 @@
 module ParserSpec where
 
-import Test.Hspec
+import           Test.Hspec
 
-import Parser
-import qualified Types as T
+import           Parser
+import qualified Types      as T
 
 spec :: Spec
 spec =

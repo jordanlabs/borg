@@ -1,11 +1,11 @@
 module BoardFunctionsSpec where
 
-import Test.Hspec
-import Test.QuickCheck
+import           Test.Hspec
+import           Test.QuickCheck
 
-import Generators
-import BoardFunctions
-import qualified Types as T
+import           BoardFunctions
+import           Generators
+import qualified Types           as T
 
 spec :: Spec
 spec = describe "BoardFunctions" $ do

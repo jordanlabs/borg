@@ -1,8 +1,8 @@
 module LibSpec where
 
-import Test.Hspec
+import           Test.Hspec
 
-import Lib
+import           Lib
 
 spec :: Spec
 spec =

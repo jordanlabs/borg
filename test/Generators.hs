@@ -1,8 +1,8 @@
 module Generators where
 
-import Test.QuickCheck
+import           Test.QuickCheck
 
-import qualified Types as T
+import qualified Types           as T
 
 genDirection :: Gen T.Direction
 genDirection = Test.QuickCheck.elements [T.North, T.East, T.South, T.West]

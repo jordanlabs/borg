@@ -1,18 +1,18 @@
+{-# LANGUAGE FlexibleInstances    #-}
 {-# LANGUAGE TypeSynonymInstances #-}
-{-# LANGUAGE FlexibleInstances #-}
 module LawsSpec where
 
-import Test.Hspec
-import Test.Hspec.Checkers
-import Test.QuickCheck
-import Test.QuickCheck.Checkers
-import Test.QuickCheck.Classes
-import Control.Monad.State
-import Control.Monad.Writer
-import Data.Functor.Identity
+import           Control.Monad.State
+import           Control.Monad.Writer
+import           Data.Functor.Identity
+import           Test.Hspec
+import           Test.Hspec.Checkers
+import           Test.QuickCheck
+import           Test.QuickCheck.Checkers
+import           Test.QuickCheck.Classes
 
-import BoardProcessor (GameApp)
-import Generators
+import           BoardProcessor           (GameApp)
+import           Generators
 
 instance Eq (GameApp String)  where
   (==) a b =
