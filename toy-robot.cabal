@@ -39,12 +39,16 @@ test-suite toy-robot-test
   other-modules:       BoardFunctionsSpec
                      , LibSpec
                      , ParserSpec
+                     , LawsSpec
                      , Generators
   build-depends:       base
                      , toy-robot
                      , hspec
                      , QuickCheck
                      , lens
+                     , checkers
+                     , hspec-checkers
+                     , mtl
   ghc-options:         -Wincomplete-uni-patterns -Wincomplete-record-updates -threaded -rtsopts -with-rtsopts=-N
   default-language:    Haskell2010
 

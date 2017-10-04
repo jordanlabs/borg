@@ -2,7 +2,7 @@
 {-# LANGUAGE FlexibleContexts     #-}
 {-# LANGUAGE FlexibleInstances    #-}
 {-# LANGUAGE TypeSynonymInstances #-}
-module BoardProcessor (getAction) where
+module BoardProcessor (getAction, GameApp) where
 
 import qualified Types                 as T
 
@@ -13,7 +13,7 @@ import           Control.Monad.Writer  (MonadWriter, Writer, WriterT (WriterT),
                                         tell)
 import           Data.Functor.Identity (Identity (Identity))
 
-getAction :: T.Command -> GameApp
+getAction :: T.Command -> GameApp T.Board
 getAction (T.Place coords facing) = placeAction coords facing
 getAction T.Left                  = leftAction
 getAction T.Right                 = rightAction
@@ -25,11 +25,11 @@ placedRobotFacing = placedRobot . T.robotFacing
 
 type MessageWriter = MonadWriter [String]
 
-type GameApp = StateT T.Board (Writer [String]) ()
+type GameApp s = StateT s (Writer [String]) ()
 
 type GameAction = MonadState T.Board
 
-instance Monoid GameApp where
+instance Monoid (GameApp s) where
   mempty = StateT $ \s -> WriterT $ Identity (((), s), [])
   mappend = (>>)
 
