@@ -6,7 +6,7 @@ module BoardProcessor (getAction, GameApp) where
 
 import qualified Types                 as T
 
-import           BoardFunctions        (left, move, place, right, validate)
+import           BoardFunctions        (left, move, place, right, validate, report)
 import           Control.Lens          (over, use, (%=), _Just)
 import           Control.Monad.State   (MonadState, StateT (StateT), get, put)
 import           Control.Monad.Writer  (MonadWriter, Writer, WriterT (WriterT),
@@ -56,5 +56,5 @@ reportAction :: (GameAction m, MessageWriter m) => m ()
 reportAction = do
   r <- use T.boardRobot
   case r of
-    (Just r) -> tell [show r]
+    (Just r) -> tell [report r]
     _        -> return ()

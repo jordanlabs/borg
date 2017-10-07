@@ -1,8 +1,9 @@
-module BoardFunctions (place, left, right, move, validate) where
+module BoardFunctions (place, left, right, move, validate, report) where
 
 import qualified Types        as T
 
 import           Control.Lens (over, set)
+import           Data.Char    (toUpper)
 import           Data.List    (elemIndex)
 import           Data.Maybe   (fromJust)
 
@@ -29,6 +30,10 @@ move r@(T.Robot _ T.North) = over (T.robotPosition . T.coordinateY) (+1) r
 move r@(T.Robot _ T.East)  = over (T.robotPosition . T.coordinateX) (+1) r
 move r@(T.Robot _ T.South) = over (T.robotPosition . T.coordinateY) (flip (-) 1) r
 move r@(T.Robot _ T.West)  = over (T.robotPosition . T.coordinateX) (flip (-) 1) r
+
+report :: T.Robot -> String
+report (T.Robot (T.Coordinate robotX robotY) facing) =
+  show robotX ++ "," ++ show robotY ++ "," ++ fmap toUpper (show facing)
 
 validate :: T.Board -> Bool
 validate (T.Board _ Nothing) = True

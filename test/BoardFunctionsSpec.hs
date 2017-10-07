@@ -74,3 +74,7 @@ spec = describe "BoardFunctions" $ do
     it "validates a board with an invalid robot" $
       forAll genBoardWithInvalidRobot $ \b ->
         validate b `shouldBe` False
+
+  describe "report" $
+    it "produces a report" $
+      report (T.Robot (T.Coordinate 2 3) T.North) `shouldBe` "2,3,NORTH"
