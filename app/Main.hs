@@ -1,9 +1,9 @@
 module Main where
 
-import Lib (runRobot)
+import           Lib       (runRobot)
 
-import System.IO (readFile)
-import Data.List (intercalate)
+import           Data.List (intercalate)
+import           System.IO (readFile)
 
 main :: IO ()
 main = do

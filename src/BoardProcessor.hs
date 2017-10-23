@@ -2,11 +2,13 @@
 {-# LANGUAGE FlexibleContexts     #-}
 {-# LANGUAGE FlexibleInstances    #-}
 {-# LANGUAGE TypeSynonymInstances #-}
+{-# OPTIONS_GHC -fno-warn-orphans #-}
 module BoardProcessor (getAction, GameApp) where
 
 import qualified Types                 as T
 
-import           BoardFunctions        (left, move, place, right, validate, report)
+import           BoardFunctions        (left, move, place, report, right,
+                                        validate)
 import           Control.Lens          (over, use, (%=), _Just)
 import           Control.Monad.State   (MonadState, StateT (StateT), get, put)
 import           Control.Monad.Writer  (MonadWriter, Writer, WriterT (WriterT),
@@ -20,7 +22,10 @@ getAction T.Right                 = rightAction
 getAction T.Move                  = moveAction
 getAction T.Report                = reportAction
 
+placedRobot :: (T.Robot -> Identity T.Robot) -> T.Board -> Identity T.Board
 placedRobot = T.boardRobot . _Just
+
+placedRobotFacing :: (T.Direction -> Identity T.Direction) -> T.Board -> Identity T.Board
 placedRobotFacing = placedRobot . T.robotFacing
 
 type MessageWriter = MonadWriter [String]
@@ -56,5 +61,5 @@ reportAction :: (GameAction m, MessageWriter m) => m ()
 reportAction = do
   r <- use T.boardRobot
   case r of
-    (Just r) -> tell [report r]
-    _        -> return ()
+    (Just r') -> tell [report r']
+    _         -> return ()

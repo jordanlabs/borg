@@ -22,6 +22,7 @@ library
                      , megaparsec
                      , lens
                      , mtl
+  ghc-options:         -Wall -Wincomplete-uni-patterns -Wincomplete-record-updates -threaded -rtsopts -with-rtsopts=-N
   default-language:    Haskell2010
 
 executable toy-robot-exe
