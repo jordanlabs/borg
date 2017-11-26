@@ -9,22 +9,22 @@ import qualified Text.Megaparsec.Lexer  as L (integer)
 import           Text.Megaparsec.String (Parser)
 
 move :: Parser T.Command
-move = string' "MOVE" >> return T.Move
+move = T.Move <$ string' "MOVE"
 
 left :: Parser T.Command
-left = string' "LEFT" >> return T.Left
+left = T.Left <$ string' "LEFT"
 
 right :: Parser T.Command
-right = string' "RIGHT" >> return T.Right
+right = T.Right <$ string' "RIGHT"
 
 report :: Parser T.Command
-report = string' "REPORT" >> return T.Report
+report = T.Report <$ string' "REPORT"
 
 direction :: Parser T.Direction
-direction = (string' "NORTH" >> return T.North)
-        <|> (string' "EAST" >> return T.East)
-        <|> (string' "SOUTH" >> return T.South)
-        <|> (string' "WEST" >> return T.West)
+direction = (T.North <$ string' "NORTH")
+        <|> (T.East <$ string' "EAST")
+        <|> (T.South <$ string' "SOUTH")
+        <|> (T.West <$ string' "WEST")
 
 place :: Parser T.Command
 place = do
