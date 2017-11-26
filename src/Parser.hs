@@ -3,28 +3,29 @@ module Parser (parseCommand) where
 
 import qualified Types                  as T
 
+import           Data.Functor           (($>))
 import           Text.Megaparsec        (char, parseMaybe, space, string',
                                          (<|>))
 import qualified Text.Megaparsec.Lexer  as L (integer)
 import           Text.Megaparsec.String (Parser)
 
 move :: Parser T.Command
-move = T.Move <$ string' "MOVE"
+move = string' "MOVE" $> T.Move
 
 left :: Parser T.Command
-left = T.Left <$ string' "LEFT"
+left = string' "LEFT" $> T.Left
 
 right :: Parser T.Command
-right = T.Right <$ string' "RIGHT"
+right = string' "RIGHT" $> T.Right
 
 report :: Parser T.Command
-report = T.Report <$ string' "REPORT"
+report = string' "REPORT" $> T.Report
 
 direction :: Parser T.Direction
-direction = (T.North <$ string' "NORTH")
-        <|> (T.East <$ string' "EAST")
-        <|> (T.South <$ string' "SOUTH")
-        <|> (T.West <$ string' "WEST")
+direction = (string' "NORTH" $> T.North)
+        <|> (string' "EAST"  $> T.East)
+        <|> (string' "SOUTH" $> T.South)
+        <|> (string' "WEST"  $> T.West)
 
 place :: Parser T.Command
 place = do
