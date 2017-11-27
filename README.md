@@ -14,8 +14,16 @@ Using:
 
 ## Running
 
+### Run a REPL
+
 ```bash
 auto/run
+```
+
+### Run a file
+
+```bash
+auto/run data/ex1.txt
 ```
 
 ## Testing

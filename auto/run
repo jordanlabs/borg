@@ -4,4 +4,4 @@ cd $(dirname $0)/..
 
 stack build
 
-stack exec toy-robot-exe
+stack exec toy-robot-exe "$@"
