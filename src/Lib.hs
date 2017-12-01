@@ -1,8 +1,8 @@
 module Lib (runRobot) where
 
-import           BoardProcessor
-import           Parser
-import           Types
+import           BoardProcessor       (getAction)
+import           Parser               (parseCommand)
+import           Types                (Board (Board), Coordinate (Coordinate))
 
 import           Control.Monad.State  (evalStateT)
 import           Control.Monad.Writer (execWriter)

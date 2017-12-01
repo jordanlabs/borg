@@ -14,7 +14,7 @@ getIndex :: T.Direction -> Int
 getIndex = fromJust . flip elemIndex directions
 
 adjustDirection :: Int -> T.Direction -> T.Direction
-adjustDirection num = (!!) directions . flip mod 4 . fromIntegral . (+ num) . getIndex
+adjustDirection num = (!!) directions . flip mod 4 . (+ num) . getIndex
 
 place :: T.Robot -> T.Board -> T.Board
 place = set T.boardRobot . Just
