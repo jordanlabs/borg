@@ -9,15 +9,15 @@ module BoardProcessor
   , GameApp
   ) where
 
-import qualified Types                 as T
-
-import           BoardFunctions        (left, move, place, report, right,
-                                        validate)
 import           Control.Lens          (over, use, (%=), _Just)
 import           Control.Monad.State   (MonadState, StateT (StateT), get, put)
 import           Control.Monad.Writer  (MonadWriter, Writer, WriterT (WriterT),
                                         tell)
 import           Data.Functor.Identity (Identity (Identity))
+
+import           BoardFunctions        (left, move, place, report, right,
+                                        validate)
+import qualified Types                 as T
 
 getAction :: T.Command -> GameApp T.Board
 getAction (T.Place coords facing) = placeAction coords facing

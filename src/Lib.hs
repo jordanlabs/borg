@@ -2,13 +2,13 @@ module Lib
   ( runRobot
   ) where
 
-import           BoardProcessor       (getAction)
-import           Parser               (parseCommand)
-import           Types                (Board (Board), Coordinate (Coordinate))
-
 import           Control.Monad.State  (evalStateT)
 import           Control.Monad.Writer (execWriter)
 import           Data.Maybe           (catMaybes)
+
+import           BoardProcessor       (getAction)
+import           Parser               (parseCommand)
+import           Types                (Board (Board), Coordinate (Coordinate))
 
 runRobot :: [String] -> [String]
 runRobot input =

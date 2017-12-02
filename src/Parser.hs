@@ -4,13 +4,13 @@ module Parser
   ( parseCommand
   ) where
 
-import qualified Types                  as T
-
 import           Data.Functor           (($>))
 import           Text.Megaparsec        (char, parseMaybe, space, string',
                                          (<|>))
 import qualified Text.Megaparsec.Lexer  as L (integer)
 import           Text.Megaparsec.String (Parser)
+
+import qualified Types                  as T
 
 move :: Parser T.Command
 move = string' "MOVE" $> T.Move

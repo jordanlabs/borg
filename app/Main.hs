@@ -1,10 +1,10 @@
 module Main where
 
-import           Lib                (runRobot)
-
 import           Data.List          (intercalate)
 import           System.Environment (getArgs)
 import           System.IO          (readFile)
+
+import           Lib                (runRobot)
 
 main :: IO ()
 main = do

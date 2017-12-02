@@ -7,12 +7,12 @@ module BoardFunctions
   , report
   ) where
 
-import qualified Types        as T
-
 import           Control.Lens (over, set)
 import           Data.Char    (toUpper)
 import           Data.List    (elemIndex)
 import           Data.Maybe   (fromJust)
+
+import qualified Types        as T
 
 directions :: [T.Direction]
 directions = [T.North, T.East, T.South, T.West]
