@@ -1,4 +1,11 @@
-module BoardFunctions (place, left, right, move, validate, report) where
+module BoardFunctions
+  ( place
+  , left
+  , right
+  , move
+  , validate
+  , report
+  ) where
 
 import qualified Types        as T
 

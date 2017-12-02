@@ -3,7 +3,11 @@
 {-# LANGUAGE FlexibleInstances    #-}
 {-# LANGUAGE TypeSynonymInstances #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
-module BoardProcessor (getAction, GameApp) where
+
+module BoardProcessor
+  ( getAction
+  , GameApp
+  ) where
 
 import qualified Types                 as T
 
@@ -54,7 +58,9 @@ validatedAction :: GameAction m => (T.Board -> T.Board) -> m ()
 validatedAction updateBoard = do
   current <- get
   let updated = updateBoard current
-      final   = if validate updated then updated else current
+      final   = if validate updated
+                  then updated
+                  else current
   put final
 
 reportAction :: (GameAction m, MessageWriter m) => m ()

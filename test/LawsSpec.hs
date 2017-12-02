@@ -1,5 +1,7 @@
 {-# LANGUAGE FlexibleInstances    #-}
 {-# LANGUAGE TypeSynonymInstances #-}
+{-# OPTIONS_GHC -fno-warn-orphans #-}
+
 module LawsSpec where
 
 import           Control.Monad.State
@@ -11,14 +13,13 @@ import           Test.QuickCheck
 import           Test.QuickCheck.Checkers
 import           Test.QuickCheck.Classes
 
-import           BoardProcessor           (GameApp)
-import           Generators
+import           BoardProcessor
 
-instance Eq (GameApp String)  where
+instance Eq (GameApp String) where
   (==) a b =
     let aResult = execWriter $ evalStateT a ""
         bResult = execWriter $ evalStateT b ""
-     in aResult == bResult
+    in  aResult == bResult
 
 instance Show (GameApp String) where
   show a = mconcat $ execWriter $ evalStateT a ""

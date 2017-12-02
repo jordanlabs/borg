@@ -5,7 +5,7 @@ import           Test.QuickCheck
 import qualified Types           as T
 
 genDirection :: Gen T.Direction
-genDirection = Test.QuickCheck.elements [T.North, T.East, T.South, T.West]
+genDirection = elements [T.North, T.East, T.South, T.West]
 
 genRobot :: Gen T.Robot
 genRobot = do
@@ -51,4 +51,4 @@ genUnplacedBoard = do
   return $ T.Board c Nothing
 
 genNonPlaceCommand :: Gen T.Command
-genNonPlaceCommand = Test.QuickCheck.elements [T.Left, T.Right, T.Move, T.Report]
+genNonPlaceCommand = elements [T.Left, T.Right, T.Move, T.Report]

@@ -1,4 +1,6 @@
-module Lib (runRobot) where
+module Lib
+  ( runRobot
+  ) where
 
 import           BoardProcessor       (getAction)
 import           Parser               (parseCommand)
@@ -12,7 +14,7 @@ runRobot :: [String] -> [String]
 runRobot input =
   let commands = catMaybes $ fmap parseCommand input
       action   = foldMap getAction commands
-   in execWriter $ evalStateT action startingBoard
+  in  execWriter $ evalStateT action startingBoard
 
 startingBoard :: Board
 startingBoard = Board (Coordinate 5 5) Nothing

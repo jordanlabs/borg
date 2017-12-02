@@ -1,5 +1,8 @@
 {-# OPTIONS_GHC -fno-warn-unused-do-bind #-}
-module Parser (parseCommand) where
+
+module Parser
+  ( parseCommand
+  ) where
 
 import qualified Types                  as T
 
