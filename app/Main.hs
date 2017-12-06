@@ -1,3 +1,4 @@
+{-# LANGUAGE QuasiQuotes, OverloadedStrings #-}
 module Main where
 
 import           Data.List          (intercalate)
@@ -15,7 +16,15 @@ main = do
       fileContents <- readFile filePath
       let result = intercalate "\n" $ runInput fileContents
       putStrLn result
-    _ -> interact (unlines . runInput)
+    _ -> do
+      putStrLn instructions
+      interact (unlines . runInput)
 
 runInput :: String -> [String]
 runInput = runRobot . lines
+
+instructions :: String
+instructions = "---------------------------------------------\n\
+               \We are Borg. You will be assimilated.\n\
+               \Give us instructions to move around the board\n\
+               \PLACE X,Y,FACING - MOVE - LEFT - RIGHT"

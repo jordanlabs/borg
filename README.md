@@ -1,10 +1,10 @@
-# Locutus Of Borg
+# We Are Borg 
 
 Your Haskell toy robot will be assimilated. It's technological distinctiveness will be added to our own. Resistence is futile.
 
-![Locutus Of Borg](https://i.imgur.com/n7nKjHR.gif)
+![Borg](https://i.imgur.com/n7nKjHR.gif)
 
-A Haskell toy robot that has assimilated many other toy robots. We are borg.
+A Haskell toy robot that has assimilated many other toy robots.
 
 ## Features
 
