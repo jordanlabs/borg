@@ -1,4 +1,3 @@
-{-# LANGUAGE QuasiQuotes, OverloadedStrings #-}
 module Main where
 
 import           Data.List          (intercalate)
