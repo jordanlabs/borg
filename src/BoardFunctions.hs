@@ -9,19 +9,11 @@ module BoardFunctions
 
 import           Control.Lens (over, set)
 import           Data.Char    (toUpper)
-import           Data.List    (elemIndex)
-import           Data.Maybe   (fromJust)
 
 import qualified Types        as T
 
-directions :: [T.Direction]
-directions = [T.North, T.East, T.South, T.West]
-
-getIndex :: T.Direction -> Int
-getIndex = fromJust . flip elemIndex directions
-
 adjustDirection :: Int -> T.Direction -> T.Direction
-adjustDirection num = (!!) directions . flip mod 4 . (+ num) . getIndex
+adjustDirection num = toEnum . flip mod 4 . (+ num) . fromEnum
 
 place :: T.Robot -> T.Board -> T.Board
 place = set T.boardRobot . Just

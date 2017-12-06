@@ -19,7 +19,7 @@ data Direction =
   | East
   | South
   | West
-  deriving (Eq, Show)
+  deriving (Eq, Show, Enum)
 
 data Coordinate = Coordinate
   { _coordinateX :: Int
