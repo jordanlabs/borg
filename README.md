@@ -1,6 +1,12 @@
-#  A Haskell Toy Robot
+# We Are Borg 
 
-Using:
+Your Haskell toy robot will be assimilated. It's technological distinctiveness will be added to our own. Resistence is futile.
+
+![Borg](https://i.imgur.com/n7nKjHR.gif)
+
+A Haskell toy robot that has assimilated many other toy robots.
+
+## Features
 
 - Lenses
 - State
