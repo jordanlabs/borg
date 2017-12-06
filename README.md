@@ -1,6 +1,12 @@
-#  A Haskell Toy Robot
+# Locutus Of Borg
 
-Using:
+You (and your Haskell toy robot) will be assimilated!
+
+![Locutus Of Borg](https://i.imgur.com/n7nKjHR.gif)
+
+A Haskell toy robot which has assimilated the ideas from many other toy robots.
+
+## Features
 
 - Lenses
 - State
