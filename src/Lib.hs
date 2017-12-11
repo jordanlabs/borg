@@ -12,7 +12,7 @@ import           Types                (Board (Board), Coordinate (Coordinate))
 
 runRobot :: [String] -> [String]
 runRobot input =
-  let commands = catMaybes $ fmap parseCommand input
+  let commands = catMaybes $ parseCommand <$> input
       action   = foldMap getAction commands
   in  execWriter $ evalStateT action startingBoard
 

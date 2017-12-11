@@ -28,8 +28,8 @@ data Coordinate = Coordinate
 
 data Command =
     Move
-  | Left
-  | Right
+  | TurnLeft
+  | TurnRight
   | Report
   | Place Coordinate Direction
   deriving (Eq, Show)

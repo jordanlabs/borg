@@ -21,8 +21,8 @@ import qualified Types                 as T
 
 getAction :: T.Command -> GameApp T.Board
 getAction (T.Place coords facing) = placeAction coords facing
-getAction T.Left                  = leftAction
-getAction T.Right                 = rightAction
+getAction T.TurnLeft              = leftAction
+getAction T.TurnRight             = rightAction
 getAction T.Move                  = moveAction
 getAction T.Report                = reportAction
 
@@ -46,7 +46,7 @@ placeAction :: GameAction m => T.Coordinate -> T.Direction -> m ()
 placeAction coords facing = validatedAction $ place (T.Robot coords facing)
 
 moveAction :: GameAction m => m ()
-moveAction = validatedAction (over placedRobot move)
+moveAction = validatedAction $ over placedRobot move
 
 leftAction :: GameAction m => m ()
 leftAction = placedRobotFacing %= left

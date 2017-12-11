@@ -16,10 +16,10 @@ move :: Parser T.Command
 move = string' "MOVE" $> T.Move
 
 left :: Parser T.Command
-left = string' "LEFT" $> T.Left
+left = string' "LEFT" $> T.TurnLeft
 
 right :: Parser T.Command
-right = string' "RIGHT" $> T.Right
+right = string' "RIGHT" $> T.TurnRight
 
 report :: Parser T.Command
 report = string' "REPORT" $> T.Report

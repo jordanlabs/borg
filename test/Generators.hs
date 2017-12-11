@@ -51,4 +51,4 @@ genUnplacedBoard = do
   return $ T.Board c Nothing
 
 genNonPlaceCommand :: Gen T.Command
-genNonPlaceCommand = elements [T.Left, T.Right, T.Move, T.Report]
+genNonPlaceCommand = elements [T.TurnLeft, T.TurnRight, T.Move, T.Report]
