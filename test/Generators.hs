@@ -1,6 +1,6 @@
 module Generators where
 
-import           Test.QuickCheck
+import           Test.QuickCheck (Gen, arbitrary, elements, suchThat)
 
 import qualified Types           as T
 
@@ -33,19 +33,19 @@ genRobotGreaterThan x' y' = do
   f <- genDirection
   return $ T.Robot (T.Coordinate x y) f
 
-genBoardWithRobot :: Gen T.Board
-genBoardWithRobot = do
+genBoardValidRobot :: Gen T.Board
+genBoardValidRobot = do
   c <- genCoordinate
   r <- genRobotLessThan (T._coordinateX c) (T._coordinateY c)
   return $ T.Board c (Just r)
 
-genBoardWithInvalidRobot :: Gen T.Board
-genBoardWithInvalidRobot = do
+genBoardInvalidRobot :: Gen T.Board
+genBoardInvalidRobot = do
   c <- genCoordinate
   r <- genRobotGreaterThan (T._coordinateX c) (T._coordinateY c)
   return $ T.Board c (Just r)
 
-genUnplacedBoard :: Gen T.Board
-genUnplacedBoard = do
+genBoardNoRobot :: Gen T.Board
+genBoardNoRobot = do
   c <- genCoordinate
   return $ T.Board c Nothing

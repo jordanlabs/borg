@@ -1,10 +1,11 @@
 module BoardFunctionsSpec where
 
-import           Test.Hspec
-import           Test.QuickCheck
+import           Test.Hspec      (Spec, describe, it, shouldBe)
+import           Test.QuickCheck (forAll, property)
 
-import           BoardFunctions
-import           Generators
+import           BoardFunctions  (left, move, place, report, right, validate)
+import           Generators      (genBoardInvalidRobot, genBoardValidRobot,
+                                  genRobot, genBoardNoRobot)
 import qualified Types           as T
 
 spec :: Spec
@@ -50,15 +51,15 @@ spec = describe "BoardFunctions" $ do
 
   describe "validateBoard" $ do
     it "validates a board with no robot" $ property $
-      forAll genUnplacedBoard $ \b ->
+      forAll genBoardNoRobot $ \b ->
         validate b `shouldBe` True
 
     it "validates a board with a valid robot" $ property $
-      forAll genBoardWithRobot $ \b ->
+      forAll genBoardValidRobot $ \b ->
         validate b `shouldBe` True
 
     it "validates a board with an invalid robot" $ property $
-      forAll genBoardWithInvalidRobot $ \b ->
+      forAll genBoardInvalidRobot $ \b ->
         validate b `shouldBe` False
 
   describe "report" $

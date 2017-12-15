@@ -1,8 +1,8 @@
 module LibSpec where
 
-import           Test.Hspec
+import           Test.Hspec (Spec, describe, it, shouldBe)
 
-import           Lib
+import           Lib        (runRobot)
 
 spec :: Spec
 spec =

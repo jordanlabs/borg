@@ -4,16 +4,16 @@
 
 module LawsSpec where
 
-import           Control.Monad.State
-import           Control.Monad.Writer
-import           Data.Functor.Identity
-import           Test.Hspec
-import           Test.Hspec.Checkers
-import           Test.QuickCheck
-import           Test.QuickCheck.Checkers
-import           Test.QuickCheck.Classes
+import           Control.Monad.State      (StateT (StateT), evalStateT)
+import           Control.Monad.Writer     (WriterT (WriterT), execWriter)
+import           Data.Functor.Identity    (Identity (Identity))
+import           Test.Hspec               (Spec)
+import           Test.Hspec.Checkers      (testBatch)
+import           Test.QuickCheck          (Arbitrary, arbitrary)
+import           Test.QuickCheck.Checkers (EqProp, eq, (=-=))
+import           Test.QuickCheck.Classes  (monoid)
 
-import           BoardProcessor
+import           BoardProcessor           (GameApp)
 
 instance Eq (GameApp String) where
   (==) a b =

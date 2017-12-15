@@ -1,8 +1,8 @@
 module ParserSpec where
 
-import           Test.Hspec
+import           Test.Hspec (Spec, describe, it, shouldBe)
 
-import           Parser
+import           Parser     (parseCommand)
 import qualified Types      as T
 
 spec :: Spec
