@@ -49,7 +49,7 @@ spec = describe "BoardFunctions" $ do
     it "turns left from west"  $ left T.East  `shouldBe` T.North
 
   describe "validateBoard" $ do
-    it "validates a board with no robot" $ do
+    it "validates a board with no robot" $ property $
       forAll genUnplacedBoard $ \b ->
         validate b `shouldBe` True
 
@@ -57,7 +57,7 @@ spec = describe "BoardFunctions" $ do
       forAll genBoardWithRobot $ \b ->
         validate b `shouldBe` True
 
-    it "validates a board with an invalid robot" $
+    it "validates a board with an invalid robot" $ property $
       forAll genBoardWithInvalidRobot $ \b ->
         validate b `shouldBe` False
 
