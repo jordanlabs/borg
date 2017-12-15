@@ -49,6 +49,3 @@ genUnplacedBoard :: Gen T.Board
 genUnplacedBoard = do
   c <- genCoordinate
   return $ T.Board c Nothing
-
-genNonPlaceCommand :: Gen T.Command
-genNonPlaceCommand = elements [T.TurnLeft, T.TurnRight, T.Move, T.Report]
