@@ -18,6 +18,7 @@ ghc-options:
 - -Widentities
 - -Wredundant-constraints
 - -Wmissing-import-lists
+- -Wmonomorphism-restriction
 
 dependencies:
   - base >= 4.7 && < 5
