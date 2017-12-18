@@ -14,6 +14,7 @@ import           Control.Monad.State   (MonadState, StateT (StateT), get, put)
 import           Control.Monad.Writer  (MonadWriter, Writer, WriterT (WriterT),
                                         tell)
 import           Data.Functor.Identity (Identity (Identity))
+import           Data.Semigroup        (Semigroup, (<>))
 
 import           BoardFunctions        (left, move, place, report, right,
                                         validate)
@@ -38,9 +39,12 @@ type GameApp s = StateT s (Writer [String]) ()
 
 type GameAction = MonadState T.Board
 
+instance Semigroup (GameApp s) where
+  (<>) = (>>)
+
 instance Monoid (GameApp s) where
   mempty = StateT $ \s -> WriterT $ Identity (((), s), [])
-  mappend = (>>)
+  mappend = (<>)
 
 placeAction :: GameAction m => T.Coordinate -> T.Direction -> m ()
 placeAction coords facing = validatedAction $ place (T.Robot coords facing)
