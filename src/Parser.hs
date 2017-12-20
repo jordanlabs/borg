@@ -1,16 +1,19 @@
+{-# LANGUAGE ScopedTypeVariables #-}
 {-# OPTIONS_GHC -fno-warn-unused-do-bind #-}
 
 module Parser
   ( parseCommand
   ) where
 
-import           Data.Functor           (($>))
-import           Text.Megaparsec        (char, parseMaybe, space, string',
-                                         (<|>))
-import qualified Text.Megaparsec.Lexer  as L (integer)
-import           Text.Megaparsec.String (Parser)
+import           Data.Functor               (($>))
+import           Data.Void                  (Void)
+import           Text.Megaparsec            (Parsec, parseMaybe, (<|>))
+import           Text.Megaparsec.Char       (char, space, string')
+import qualified Text.Megaparsec.Char.Lexer as L (decimal)
 
-import qualified Types                  as T
+import qualified Types                      as T
+
+type Parser = Parsec Void String
 
 move :: Parser T.Command
 move = string' "MOVE" $> T.Move
@@ -34,12 +37,12 @@ place :: Parser T.Command
 place = do
   string' "PLACE"
   space
-  x <- L.integer
+  (x :: Int) <- L.decimal
   char ','
-  y <- L.integer
+  (y :: Int) <- L.decimal
   char ','
   d <- direction
-  return $ T.Place (T.Coordinate (fromIntegral x) (fromIntegral y)) d
+  return $ T.Place (T.Coordinate x y) d
 
 commandParser :: Parser T.Command
 commandParser = move <|> left <|> right <|> place <|> report
