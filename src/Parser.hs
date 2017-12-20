@@ -5,9 +5,9 @@ module Parser
   ) where
 
 import           Data.Functor           (($>))
-import           Text.Megaparsec        (char, parseMaybe, space, string',
-                                         (<|>))
-import qualified Text.Megaparsec.Lexer  as L (integer)
+import           Text.Megaparsec.Char        (char, space, string')
+import Text.Megaparsec (parseMaybe, (<|>))
+import qualified Text.Megaparsec.Char.Lexer  as L (integer)
 import           Text.Megaparsec.String (Parser)
 
 import qualified Types                  as T
