@@ -10,7 +10,7 @@ module BoardProcessor
   ) where
 
 import           Control.Lens          (over, use, (%=), _Just)
-import           Control.Monad.State   (MonadState, StateT (StateT), get, put)
+import           Control.Monad.State   (MonadState, StateT (StateT), modify)
 import           Control.Monad.Writer  (MonadWriter, Writer, WriterT (WriterT),
                                         tell)
 import           Data.Functor.Identity (Identity (Identity))
@@ -59,13 +59,12 @@ rightAction :: GameAction m => m ()
 rightAction = placedRobotFacing %= right
 
 validatedAction :: GameAction m => (T.Board -> T.Board) -> m ()
-validatedAction updateBoard = do
-  current <- get
-  let updated = updateBoard current
-      final   = if validate updated
-                  then updated
-                  else current
-  put final
+validatedAction updateBoard = modify maybeUpdate
+  where
+    maybeUpdate b = let newB = updateBoard b
+                    in  if validate newB
+                          then newB
+                          else b
 
 reportAction :: (GameAction m, MessageWriter m) => m ()
 reportAction = do
