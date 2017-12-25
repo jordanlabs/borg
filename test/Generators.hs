@@ -1,8 +1,9 @@
 module Generators where
 
-import           Test.QuickCheck (Gen, arbitrary, elements, suchThat)
+import           Test.QuickCheck     (Gen, elements)
+import           Test.QuickCheck.Gen (choose)
 
-import qualified Types           as T
+import qualified Types               as T
 
 genDirection :: Gen T.Direction
 genDirection = elements [T.North, T.East, T.South, T.West]
@@ -15,23 +16,23 @@ genRobot = do
 
 genCoordinate :: Gen T.Coordinate
 genCoordinate = do
-  x <- arbitrary `suchThat` (\a -> a >= 1 && a <= 5)
-  y <- arbitrary `suchThat` (\a -> a >= 1 && a <= 5)
+  x <- choose (1, 5)
+  y <- choose (1, 5)
   return $ T.Coordinate x y
 
 genRobotLessThan :: Int -> Int -> Gen T.Robot
-genRobotLessThan x' y' = do
-  x <- arbitrary `suchThat` (\a -> a >= 1 && a <= x')
-  y <- arbitrary `suchThat` (\a -> a >= 1 && a <= y')
-  f <- genDirection
-  return $ T.Robot (T.Coordinate x y) f
+genRobotLessThan x y = do
+  x' <- choose (1, x)
+  y' <- choose (1, y)
+  f  <- genDirection
+  return $ T.Robot (T.Coordinate x' y') f
 
 genRobotGreaterThan :: Int -> Int -> Gen T.Robot
-genRobotGreaterThan x' y' = do
-  x <- arbitrary `suchThat` (> x')
-  y <- arbitrary `suchThat` (> y')
-  f <- genDirection
-  return $ T.Robot (T.Coordinate x y) f
+genRobotGreaterThan x y = do
+  x' <- choose (x + 1, maxBound)
+  y' <- choose (y + 1, maxBound)
+  f  <- genDirection
+  return $ T.Robot (T.Coordinate x' y') f
 
 genBoardValidRobot :: Gen T.Board
 genBoardValidRobot = do
