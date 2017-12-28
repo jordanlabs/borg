@@ -4,8 +4,8 @@ import           Test.Hspec      (Spec, describe, it, shouldBe)
 import           Test.QuickCheck (forAll, property)
 
 import           BoardFunctions  (left, move, place, report, right, validate)
-import           Generators      (genBoardInvalidRobot, genBoardValidRobot,
-                                  genRobot, genBoardNoRobot)
+import           Generators      (genBoardInvalidRobot, genBoardNoRobot,
+                                  genBoardValidRobot, genRobot)
 import qualified Types           as T
 
 spec :: Spec
@@ -62,6 +62,6 @@ spec = describe "BoardFunctions" $ do
       forAll genBoardInvalidRobot $ \b ->
         validate b `shouldBe` False
 
-  describe "report" $
+  describe "report" $ do
     it "produces a report" $
       report (T.Robot (T.Coordinate 2 3) T.North) `shouldBe` "2,3,NORTH"

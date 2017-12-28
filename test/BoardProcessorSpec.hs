@@ -12,9 +12,9 @@ import           Generators           (genBoardNoRobot, genBoardValidRobot,
 import qualified Types                as T
 
 spec :: Spec
-spec = describe "BoardProcessor" $ do
+spec = describe "getAction" $ do
 
-  describe "placeAction" $
+  describe "placeAction" $ do
     it "performs a place" $ do
       board@(T.Board bc@(T.Coordinate x y) _) <- generate genBoardNoRobot
       command@(T.Place cc cdir)               <- generate $ genPlaceCommandWithin x y
@@ -22,6 +22,12 @@ spec = describe "BoardProcessor" $ do
           (result, _) = runWriter $ execStateT action board
           expected    = T.Board bc (Just $ T.Robot cc cdir)
       result `shouldBe` expected
+
+    it "rejects invalid places" $
+      let action      = getAction $ T.Place (T.Coordinate 6 6) T.North
+          board       = T.Board (T.Coordinate 5 5) Nothing
+          (result, _) = runWriter $ execStateT action board
+      in  result `shouldBe` board
 
   describe "leftAction" $
     it "performs a left" $ do
@@ -41,13 +47,19 @@ spec = describe "BoardProcessor" $ do
           expected    = T.Board bc (Just $ T.Robot rc T.East)
       result `shouldBe` expected
 
-  describe "moveAction" $
+  describe "moveAction" $ do
     it "performs a move" $
       let action      = getAction $ T.Move
           board       = T.Board (T.Coordinate 5 5) (Just $ T.Robot (T.Coordinate 2 2) T.North)
           (result, _) = runWriter $ execStateT action board
           expected    = T.Board (T.Coordinate 5 5) (Just $ T.Robot (T.Coordinate 2 3) T.North)
       in  result `shouldBe` expected
+
+    it "rejects invalid moves" $
+      let action      = getAction $ T.Move
+          board       = T.Board (T.Coordinate 5 5) (Just $ T.Robot (T.Coordinate 5 5) T.North)
+          (result, _) = runWriter $ execStateT action board
+      in  result `shouldBe` board
 
   describe "reportAction" $
     it "produces a report" $

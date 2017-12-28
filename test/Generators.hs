@@ -51,12 +51,6 @@ genBoardNoRobot = do
   c <- genCoordinate
   return $ T.Board c Nothing
 
-genBoardAndValidPlace :: Gen (T.Board, T.Robot)
-genBoardAndValidPlace = do
-  b@(T.Board (T.Coordinate x y) _) <- genBoardNoRobot
-  r                                <- genRobotWithin x y
-  return (b, r)
-
 genPlaceCommandWithin :: Int -> Int -> Gen T.Command
 genPlaceCommandWithin x y = do
   x' <- choose (1, x)
