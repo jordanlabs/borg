@@ -20,8 +20,8 @@ genCoordinate = do
   y <- choose (1, 5)
   return $ T.Coordinate x y
 
-genRobotLessThan :: Int -> Int -> Gen T.Robot
-genRobotLessThan x y = do
+genRobotWithin :: Int -> Int -> Gen T.Robot
+genRobotWithin x y = do
   x' <- choose (1, x)
   y' <- choose (1, y)
   f  <- genDirection
@@ -37,7 +37,7 @@ genRobotGreaterThan x y = do
 genBoardValidRobot :: Gen T.Board
 genBoardValidRobot = do
   c <- genCoordinate
-  r <- genRobotLessThan (T._coordinateX c) (T._coordinateY c)
+  r <- genRobotWithin (T._coordinateX c) (T._coordinateY c)
   return $ T.Board c (Just r)
 
 genBoardInvalidRobot :: Gen T.Board
@@ -50,3 +50,17 @@ genBoardNoRobot :: Gen T.Board
 genBoardNoRobot = do
   c <- genCoordinate
   return $ T.Board c Nothing
+
+genBoardAndValidPlace :: Gen (T.Board, T.Robot)
+genBoardAndValidPlace = do
+  b@(T.Board (T.Coordinate x y) _) <- genBoardNoRobot
+  r                                <- genRobotWithin x y
+  return (b, r)
+
+genPlaceCommandWithin :: Int -> Int -> Gen T.Command
+genPlaceCommandWithin x y = do
+  x' <- choose (1, x)
+  y' <- choose (1, y)
+  d  <- genDirection
+  return $ T.Place (T.Coordinate x' y') d
+

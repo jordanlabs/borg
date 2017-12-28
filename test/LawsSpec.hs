@@ -17,7 +17,7 @@ import           BoardProcessor           (GameApp)
 
 instance Eq (GameApp String) where
   (==) a b =
-    let aResult = execWriter $ evalStateT a ""
+    let aResult = execWriter $ evalStateT a "a"
         bResult = execWriter $ evalStateT b ""
     in  aResult == bResult
 
