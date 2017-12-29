@@ -27,7 +27,7 @@ instance Show (GameApp String) where
 instance Arbitrary (GameApp String) where
   arbitrary = do
     a <- arbitrary
-    return $ StateT $ \s -> WriterT $ Identity (((), s), [a])
+    pure $ StateT $ \s -> WriterT $ Identity (((), s), [a])
 
 instance EqProp (GameApp String) where
   (=-=) = eq

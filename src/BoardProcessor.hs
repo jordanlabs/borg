@@ -71,4 +71,4 @@ reportAction = do
   r <- use T.boardRobot
   case r of
     (Just r') -> tell [report r']
-    _         -> return ()
+    _         -> pure ()

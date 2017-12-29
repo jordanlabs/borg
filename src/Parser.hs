@@ -42,7 +42,7 @@ place = do
   (y :: Int) <- L.decimal
   char ','
   d <- direction
-  return $ T.Place (T.Coordinate x y) d
+  pure $ T.Place (T.Coordinate x y) d
 
 commandParser :: Parser T.Command
 commandParser = move <|> left <|> right <|> place <|> report
