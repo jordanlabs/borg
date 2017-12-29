@@ -49,21 +49,21 @@ spec = describe "getAction" $ do
 
   describe "moveAction" $ do
     it "performs a move" $
-      let action      = getAction $ T.Move
+      let action      = getAction T.Move
           board       = T.Board (T.Coordinate 5 5) (Just $ T.Robot (T.Coordinate 2 2) T.North)
           (result, _) = runWriter $ execStateT action board
           expected    = T.Board (T.Coordinate 5 5) (Just $ T.Robot (T.Coordinate 2 3) T.North)
       in  result `shouldBe` expected
 
     it "rejects invalid moves" $
-      let action      = getAction $ T.Move
+      let action      = getAction T.Move
           board       = T.Board (T.Coordinate 5 5) (Just $ T.Robot (T.Coordinate 5 5) T.North)
           (result, _) = runWriter $ execStateT action board
       in  result `shouldBe` board
 
   describe "reportAction" $
     it "produces a report" $
-      let action   = getAction $ T.Report
+      let action   = getAction T.Report
           board    = T.Board (T.Coordinate 5 5) (Just $ T.Robot (T.Coordinate 2 2) T.North)
           result   = execWriter $ execStateT action board
           expected = ["2,2,NORTH"]
