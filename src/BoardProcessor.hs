@@ -10,10 +10,9 @@ module BoardProcessor
   ) where
 
 import           Control.Lens          (over, use, (%=), _Just)
-import           Control.Monad.State   (MonadState, StateT (StateT), modify)
-import           Control.Monad.Writer  (MonadWriter, Writer, WriterT (WriterT),
-                                        tell)
-import           Data.Functor.Identity (Identity (Identity))
+import           Control.Monad.State   (MonadState, StateT, modify)
+import           Control.Monad.Writer  (MonadWriter, Writer, tell)
+import           Data.Functor.Identity (Identity)
 import           Data.Semigroup        (Semigroup, (<>))
 
 import           BoardFunctions        (left, move, place, report, right,
@@ -43,7 +42,7 @@ instance Semigroup (GameApp s) where
   (<>) = (>>)
 
 instance Monoid (GameApp s) where
-  mempty = StateT $ \s -> WriterT $ Identity (((), s), [])
+  mempty = pure ()
   mappend = (<>)
 
 placeAction :: GameAction m => T.Coordinate -> T.Direction -> m ()
