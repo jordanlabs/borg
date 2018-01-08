@@ -4,9 +4,8 @@
 
 module LawsSpec where
 
-import           Control.Monad.State      (StateT (StateT), evalStateT)
-import           Control.Monad.Writer     (WriterT (WriterT), execWriter)
-import           Data.Functor.Identity    (Identity (Identity))
+import           Control.Monad.State      (evalStateT)
+import           Control.Monad.Writer     (execWriter, tell)
 import           Test.Hspec               (Spec)
 import           Test.Hspec.Checkers      (testBatch)
 import           Test.QuickCheck          (Arbitrary, arbitrary)
@@ -17,7 +16,7 @@ import           BoardProcessor           (GameApp)
 
 instance Eq (GameApp String) where
   (==) a b =
-    let aResult = execWriter $ evalStateT a "a"
+    let aResult = execWriter $ evalStateT a ""
         bResult = execWriter $ evalStateT b ""
     in  aResult == bResult
 
@@ -25,9 +24,7 @@ instance Show (GameApp String) where
   show a = mconcat $ execWriter $ evalStateT a ""
 
 instance Arbitrary (GameApp String) where
-  arbitrary = do
-    a <- arbitrary
-    pure $ StateT $ \s -> WriterT $ Identity (((), s), [a])
+  arbitrary = arbitrary >>= (pure . tell)
 
 instance EqProp (GameApp String) where
   (=-=) = eq
