@@ -24,7 +24,7 @@ instance Show (GameApp String) where
   show a = mconcat $ execWriter $ evalStateT a ""
 
 instance Arbitrary (GameApp String) where
-  arbitrary = arbitrary >>= (pure . tell)
+  arbitrary = tell <$> arbitrary
 
 instance EqProp (GameApp String) where
   (=-=) = eq
